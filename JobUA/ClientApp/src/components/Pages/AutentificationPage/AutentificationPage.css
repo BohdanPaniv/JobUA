@@ -1,0 +1,102 @@
+.firstLay{
+  height: max-content;
+  width: 100%;
+  background-color: #d8e9f0;
+}
+
+.content{
+  height: calc(100% - 280px);
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+}
+
+.loginIcon{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+  width: -webkit-fill-available;
+  max-width: 320px;
+}
+
+@media (max-width: 600px){
+  .SubmitButton {
+    font-size: 0.8rem;
+  }
+}
+
+@media  (max-width: 350px){
+  .card-container{
+    width: calc(100% - 10px);
+  }
+}
+
+.login-card{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.SubmitButton{
+  background-color: black;
+}
+
+.allContent{
+  height: 100%;
+  width: 100%;
+  background-color: #d8e9f0;
+}
+
+.titleLogin{
+  text-align: center;
+  margin: 0;
+}
+
+.card-container{
+  margin: 0 auto;
+  padding-left: 10%;
+  padding-right: 10%;
+  min-width: 250px;
+}
+
+input{
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+}
+
+.SubmitButton{
+  margin-top: 20px;
+  width: 100%;
+}
+
+.text-center{
+  margin: 20px 0 0 0;
+  text-align: center;
+}
+
+.text-ask{
+  margin-right: 10px;
+}
+
+.registrationLink{
+  color: black;
+  text-decoration: underline;
+}
+
+.registrationLink:hover{
+  color: black;
+}
+
+.underContainer{
+  height: 100px;
+  width: 100%;
+  border-bottom: 1.5px solid black;
+}

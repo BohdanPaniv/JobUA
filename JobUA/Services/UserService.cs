@@ -15,42 +15,41 @@ namespace JobUA.Services
             Users = DataBaseService.GetMongoCollection<User>("Users");
         }
 
-        public async Task<bool> Create(User user)
+        public async Task<User> Create(User user)
         {
             user.UserId = Guid.NewGuid().ToString();
-            List<User> foundUser = await Users.Find(x => x.Login == user.Login ||
-                x.Email == user.Email).ToListAsync();
+            List<User> foundUser = await Users.Find(x => x.Login == user.Login).ToListAsync();
 
             if (foundUser.Count == 0)
             {
                 await Users.InsertOneAsync(user);
-                return true;
+                return user;
             }
 
-            return false;
+            return new User();
         }
 
-        public async Task<bool> LogIn(string login, string password)
+        public async Task<User> LogIn(string login, string password)
         {
             List<User> foundUser = await Users.Find(x => x.Login == login &&
                 x.Password == password).ToListAsync();
 
             if (foundUser.Count == 0)
             {
-                return false;
+                return new User();
             }
 
-            return true;
+            return foundUser[0];
         }
 
         public async Task UpdateUser(User user)
         {
-            await Users.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(user.UserId)), user);
+            await Users.ReplaceOneAsync(x => x.UserId == user.UserId, user);
         }
 
         public async Task DeleteUser(string id)
         {
-            await Users.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
+            await Users.DeleteOneAsync(x => x.UserId == id);
         }
     }
 }
