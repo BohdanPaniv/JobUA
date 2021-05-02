@@ -83,7 +83,7 @@ function MyAccountPage(){
                 user !== undefined ?
                 (
                     <>
-                        <NavMenu/>
+                        <NavMenu isEmployer={false}/>
                         <div className="accountContainer">
                             <a href="/profile" className="linkToProfile">
                                 Власний розділ

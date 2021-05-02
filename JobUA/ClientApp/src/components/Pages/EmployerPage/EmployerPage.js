@@ -1,7 +1,10 @@
 import React from 'react';
 import NavMenu from '../../PageElements/NavMenu/NavMenu';
+import './EmployerPage.css';
 
 function EmployerPage(){
+
+    //console.log(window.location.href)
 
     return(
         <>

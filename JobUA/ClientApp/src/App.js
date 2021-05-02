@@ -4,10 +4,9 @@ import './App.css';
 import EdiProfile from './components/Pages/EditProfile/EditProfile';
 import AutentificationPage from './components/Pages/AutentificationPage/AutentificationPage';
 import Home from './components/Pages/Home/Home';
-import EmployeerLoginPage from './components/Pages/EmployerLoginPage/EmployerLoginPage';
 import Profile from './components/Pages/Profile/Profile';
 import MyAccountPage from './components/Pages/MyAccountPage/MyAccountPage';
-import EmployerPage from './components/Pages/EmployerPage/EmployerPage'
+import EmployerPage from './components/Pages/EmployerPage/EmployerPage';
 
 export default class App extends Component {
 
@@ -17,8 +16,9 @@ export default class App extends Component {
       <Router>
         <Switch>
             <Route exact path="/editProfile" component={EdiProfile}/>
-            <Route exact path="/employer/login/" component={EmployeerLoginPage}/>
+            <Route exact path="/employer/login/" component={() => <AutentificationPage isRegistration={false} />}/>
             <Route exact path="/jobseeker/login/" component={() => <AutentificationPage isRegistration={false} />}/>
+            <Route exact path="/employer/register/" component={() => <AutentificationPage isRegistration={true} />}/>
             <Route exact path="/jobseeker/register/" component={() => <AutentificationPage isRegistration={true} />}/>
             <Route exact path="/employer" component={EmployerPage} />
             <Route exact path="/myAccount" component={MyAccountPage}/>
