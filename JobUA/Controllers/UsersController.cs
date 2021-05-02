@@ -21,10 +21,22 @@ namespace JobUA.Controllers
             return await userService.Create(user);
         }
 
-        [HttpGet("{login},{password}")]
-        public async Task<User> GetUser(string login, string password)
+        [HttpGet("GetUserByLoginPassword/{login},{password}")]
+        public async Task<User> GetUserByLoginPassword(string login, string password)
         {
-            return await userService.LogIn(login, password);
+            return await userService.GetUserByLoginPassword(login, password);
+        }
+
+        [HttpGet("GetUserById/{userId}")]
+        public async Task<User> GetUserById(string userId)
+        {
+            return await userService.GetUserById(userId);
+        }
+
+        [HttpPut("UpdateUser/")]
+        public async Task<User> UpdateUser(User user)
+        {
+            return await userService.UpdateUser(user);
         }
 
         [HttpPut]

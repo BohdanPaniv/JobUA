@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Home.css';
+import NavMenu from '../../PageElements/NavMenu/NavMenu';
 
-export function Home() {
+function Home() {
 
     return (
         <>
+            <NavMenu isEmployer={false}/>
             <div className="Home">
                 <p>Home2</p>
                 <button>dsdsds</button>
@@ -12,4 +14,6 @@ export function Home() {
         </>
     );
 }
+
+export default Home;
 

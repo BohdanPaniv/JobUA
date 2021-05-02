@@ -1,0 +1,89 @@
+.accountContainer{
+    height: max-content;
+    padding: 20px 5% 20px 5%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.linkToProfile{
+    color: black;
+}
+
+.AccountTitle{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.cardAccountContainer{
+    width: 100%;
+    height: max-content;
+    padding: 20px;
+    background-color: #d8e9f0;
+    border: 1px solid black;
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.ul-horizontal{
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.ul-horizontal li{
+    float: left;
+    width: max-content;
+    min-width: 50%;
+    height: max-content;
+    min-height: 24px;
+}
+
+.columnContainer{
+    float: left;
+    width: 55%;
+}
+
+.columnContainer2{
+    float: right;
+    display: grid;
+}
+
+.userImageContainer{
+    height: 120px;
+    width: 100px;
+    background-color: white;
+}
+
+.userImage{
+    position: absolute;
+    height: 120px;
+    width: 100px;
+}
+
+.changeUserImage{
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+
+    .columnContainer{
+        width: 100%;
+    }
+
+    .columnContainer2{
+        float: left;
+    }
+}
+
+.updateData{
+    display: table-row-group;
+    color: black;
+}
+
+.functionButton{
+    background-color: black;
+    margin-bottom: 10px;
+}

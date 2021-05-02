@@ -101,7 +101,7 @@
 }
 
 
-.employeeLink{
+.routeLink{
   height: 100%;
   display: flex;
   align-items: center;
@@ -117,11 +117,6 @@
   color: black;
   font: 14px;
 }
-
-/*.nav-link:hover{
-  color: black;
-  text-decoration: underline;
-}*/
 
 .dropdown-toggle::after {
   float: right;

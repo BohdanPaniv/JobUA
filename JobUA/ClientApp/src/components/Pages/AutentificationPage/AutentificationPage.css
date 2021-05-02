@@ -44,8 +44,10 @@
   max-width: 320px;
 }
 
-.SubmitButton{
-  background-color: black;
+
+.SubmitButton:active{
+  background-color: #6c757d;
+  border-color: #6c757d;
 }
 
 .allContent{
@@ -73,8 +75,14 @@ input{
 }
 
 .SubmitButton{
+  color: white;
   margin-top: 20px;
   width: 100%;
+  background-color: black;
+  border-radius: 0.25rem;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
 }
 
 .text-center{

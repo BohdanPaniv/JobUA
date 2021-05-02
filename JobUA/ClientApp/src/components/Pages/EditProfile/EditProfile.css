@@ -1,0 +1,77 @@
+.title-EP{
+    margin: 20px;
+    height: max-content;
+}
+
+.title-EP a{
+    color: black;
+}
+
+.mainTitle-EP{
+    margin: 20px 0px 0px 0px;
+}
+
+.contentContainer{
+    height: max-content;
+    width: 100%;
+    padding: 1px 20px 20px 20px;
+    background-color: #d8e9f0;
+}
+
+.contentGroup{
+    margin-top: 20px;
+}
+
+.contentGroup label{
+    width: 100%;
+    margin: 0;
+}
+
+.contentGroup input{
+    margin-top: 10px;
+    padding: 5px 10px;
+    height: 40px;
+    width: 100%;
+}
+
+@media (max-width: 700px){
+    .mainContainer{
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media (min-width: 800px){
+    .mainContainer-EP{
+        width: 730px;
+        margin: 0 auto;
+        padding: 20px 20px 40px;
+    }
+}
+
+.titleEP > a{
+    color: black;
+}
+
+.SubmitButton-EP{
+    color: white;
+    width: 100%;
+    background-color: black;
+    border-radius: 0.25rem;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    width: 100px;
+    margin: 0;
+}
+
+.lastGroup{
+    display: flex;
+    margin-top: 10px;
+}
+
+.lastGroup label ,.lastGroup a{
+    margin: 0 0 0 10px;
+    align-self: center;
+    color: black;
+}

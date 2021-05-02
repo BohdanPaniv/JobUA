@@ -29,22 +29,20 @@ namespace JobUA.Services
             return new User();
         }
 
-        public async Task<User> LogIn(string login, string password)
+        public async Task<User> GetUserById(string userId)
         {
-            List<User> foundUser = await Users.Find(x => x.Login == login &&
-                x.Password == password).ToListAsync();
-
-            if (foundUser.Count == 0)
-            {
-                return new User();
-            }
-
-            return foundUser[0];
+            return await Users.Find(x => x.UserId == userId).FirstAsync();
         }
 
-        public async Task UpdateUser(User user)
+        public async Task<User> GetUserByLoginPassword(string login, string password)
         {
-            await Users.ReplaceOneAsync(x => x.UserId == user.UserId, user);
+            return await Users.Find(x => x.Login == login && x.Password == password).FirstAsync();
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            var filter = Builders<User>.Filter.Eq(x => x.UserId, user.UserId);
+            return await Users.FindOneAndReplaceAsync(filter, user);
         }
 
         public async Task DeleteUser(string id)

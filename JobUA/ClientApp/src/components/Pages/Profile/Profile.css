@@ -1,0 +1,134 @@
+.profileContainer{
+    padding: 20px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.profileTitleText{
+    margin-bottom: 20px;
+}
+
+.cardResume {
+    background-color: #d8e9f0;
+    border: 1px solid black;
+    padding: 20px 30px 20px;
+    position: relative;
+    height: max-content;
+    margin-bottom: 20px;
+}
+
+.resumeIcon{
+    height: 100px;
+    width: 70px;
+}
+
+.containerResume{
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    margin-bottom: 0;
+}
+
+.containerText{
+    padding-left: 20px;
+    list-style: none;
+    display: block;
+    margin-bottom: 0;
+}
+
+.containerText p{
+    margin-bottom: 0;
+}
+
+@media (min-width:600px){
+    .menuIcon{
+        height: 100px;
+        width: 70px;
+    }
+
+    .profileInlineMenu{
+        display: flex;
+    }
+
+    .textMenu{
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
+
+.profileInlineMenu{
+    padding-left: 0;
+    width: 100%;
+    list-style: none;
+}
+
+@media (max-width:600px){
+    .profileInlineMenu{
+        display: block;
+    }
+
+    .containerText h4{
+        font-size: 20px;
+    }
+
+    .containerText p{
+        font-size: 14px;
+    }
+
+    .profileTitleText{
+        font-size: 24px;
+    }
+
+    .menuIcon{
+        height: 50px;
+        width: 40px;
+    }
+
+    .textMenu{
+        padding: 0;
+    }
+
+    .textMenu{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+.linkToResume{
+    color: black;
+}
+
+.linkToResume:hover{
+    /* color: black;*/ 
+    text-decoration: none;
+}
+
+.containerText h4:hover{
+    text-decoration: underline;
+}
+
+.menuComponent{
+    background-color: #d8e9f0;
+    border: 1px solid black;
+    margin-bottom: -1px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.menuComponent a{
+    display: flex;
+}
+
+.menuLink{
+    color: black;
+}
+
+.iconContainer{
+    width: max-content;
+}
+
+.textMenu{
+    margin-bottom: 0;
+    padding-left: 5%;
+    text-align: center;
+}

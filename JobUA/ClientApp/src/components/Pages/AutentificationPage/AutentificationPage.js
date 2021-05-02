@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './AutentificationPage.css';
 import LogoIcon from "./../../Images/logo2.png";
-import {Button} from "reactstrap";
 import { useHistory } from "react-router-dom";
-import {Footer} from "../../PageElements/Footer/Footer";
+import saveUserToLocal from '../../saveUserToLocal/saveUserToLocal'
 
 const useFormField = (initialValue) => {
     const [value, setValue] = React.useState(initialValue);
 
-    const onChange = React.useCallback((e) => setValue(e.target.value), []);
+    const onChange = useCallback((e) => setValue(e.target.value), []);
 
     return{
         bind: {
@@ -21,8 +20,8 @@ const useFormField = (initialValue) => {
 };
 
 
-export function AutentificationPage(params){
-    const [errorList, setErrorList] = React.useState({});
+function AutentificationPage(params){
+    //const [errorList, setErrorList] = useState({});
 
     let firstNameField = useFormField("");
     let lastNameField = useFormField("");
@@ -44,16 +43,15 @@ export function AutentificationPage(params){
         return errors;
     }
 
-
     function handleSubmit(event, line){
         let xhr = new XMLHttpRequest();
         let err = errorsValidator(line);
 
-        setErrorList(err);
+        //setErrorList(err);
 
         if (Object.keys(err).length === 0){
 
-            let user = JSON.stringify({
+            let user = ({
                 UserId:"",
                 FirstName: firstNameField.get(),
                 LastName: lastNameField.get(),
@@ -67,22 +65,26 @@ export function AutentificationPage(params){
 
                     xhr.onload = function () {
                         if (xhr.status === 200) {
-                            let responsedUser = JSON.stringify(xhr.responseText);
+                            let responsedUser = JSON.parse(xhr.responseText);
                             saveUserToLocal(responsedUser);
+                            history.push("/");
+                            window.location.reload();
                         }
                     };
 
-                    xhr.send(user);
+                    xhr.send(JSON.stringify(user));
                     break;
                 }
                 case "login": {
-                    xhr.open("get","api/users/"+loginField.get()+","+passwordField.get(), true);
+                    xhr.open("get","api/users/GetUserByLoginPassword/"+loginField.get()+","+passwordField.get(), true);
                     xhr.setRequestHeader("Content-Type", "application/json");
 
                     xhr.onload = function () {
                         if (xhr.status === 200) {
-                            let responsedUser = JSON.stringify(xhr.responseText);
+                            let responsedUser = JSON.parse(xhr.responseText);
                             saveUserToLocal(responsedUser);
+                            history.push("/");
+                            window.location.reload();
                         }
                     };
 
@@ -96,22 +98,6 @@ export function AutentificationPage(params){
         }
 
         event.preventDefault();
-    }
-
-    function saveUserToLocal(user){
-        let temp = JSON.parse(JSON.parse(user));
-
-        if (temp.userId !== null){
-            localStorage.setItem("User", user);
-            history.push("/");
-            window.location.reload();
-        }
-        else {
-            let errors = {};
-            errors["Login"] = true;
-            errors["Password"] = true;
-            setErrorList(errors);
-        }
     }
 
     if(params.isRegistration){
@@ -129,9 +115,9 @@ export function AutentificationPage(params){
                             <form>
                                 <input type="text" placeholder="Прізвище" {...lastNameField.bind}/>
                                 <input type="text" placeholder="Ім'я" {...firstNameField.bind}/>
-                                <input type="email" placeholder="Ел. пошта" {...loginField.bind}/>
+                                <input type="text" placeholder="Логін" {...loginField.bind}/>
                                 <input type="password" placeholder="Пароль" {...passwordField.bind}/>
-                                <Button className="SubmitButton" onClick={event => handleSubmit(event,"registration")}>Зареєструватись</Button>
+                                <input type="submit" value="Зареєструватись" className="SubmitButton" onClick={event => handleSubmit(event,"registration")}/>
                                 <p className="text-center"></p>
                             </form>
                         </div>
@@ -153,12 +139,14 @@ export function AutentificationPage(params){
                     <h2 className="titleLogin">Вхід</h2>
                     <div className="card-container">
                         <div className="login-card">
-                            <input type="email" placeholder="Ел. пошта" {...loginField.bind}/>
-                            <input type="password" placeholder="Пароль" {...passwordField.bind}/>
-                            <Button className="SubmitButton" onClick={event => handleSubmit(event,"login")}>Увійти</Button>
+                            <form action="">
+                                <input type="text" placeholder="Логін" {...loginField.bind}/>
+                                <input type="password" placeholder="Пароль" {...passwordField.bind}/>
+                                <input type="submit" value="Увійти" className="SubmitButton" onClick={event => handleSubmit(event,"login")}/>
+                            </form>
                             <p className="text-center">
                                 <span className="text-ask">Ще не з нами?</span>
-                                <a className="registrationLink" href="/jobseeker/register/">Зареєструватися</a>
+                                <a className="registrationLink" href="/jobseeker/register/">Зареєструватись</a>
                             </p>
                         </div>
                     </div>
@@ -168,3 +156,5 @@ export function AutentificationPage(params){
         );
     }
 }
+
+export default AutentificationPage;
