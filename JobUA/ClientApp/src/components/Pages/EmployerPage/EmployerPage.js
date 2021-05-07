@@ -8,7 +8,7 @@ function EmployerPage(){
 
     return(
         <>
-            <NavMenu isEmployer={true}/>
+            <NavMenu isEmployerPage={true}/>
             <p>
                 EmployerPage
             </p>

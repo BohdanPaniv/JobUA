@@ -23,7 +23,12 @@
     content: "";
     display: table;
     clear: both;
+    margin-bottom: 20px;
 }
+
+/* .cardAccountContainer h3{
+    display: table-row;
+} */
 
 .ul-horizontal{
     width: 100%;
@@ -61,6 +66,7 @@
     position: absolute;
     height: 120px;
     width: 100px;
+    margin-top: 41px;
 }
 
 .changeUserImage{
@@ -79,8 +85,12 @@
 }
 
 .updateData{
-    display: table-row-group;
+    display: table-row-group; 
     color: black;
+}
+
+.cardAccountContainer a{
+    width: max-content;
 }
 
 .functionButton{

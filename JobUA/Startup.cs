@@ -22,6 +22,9 @@ namespace JobUA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<UserService>();
+            services.AddTransient<ResumeService>();
+            services.AddTransient<EmployerService>();
+            services.AddTransient<UsersResumeService>();
             services.AddControllersWithViews();
 
             services.AddSpaStaticFiles(configuration =>

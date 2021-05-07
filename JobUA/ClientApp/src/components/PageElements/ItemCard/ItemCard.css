@@ -1,0 +1,35 @@
+.item-card{
+    background-color: #d8e9f0;
+    border: 1px solid black;
+    padding: 20px;
+    position: relative;
+    height: max-content;
+    margin-bottom: 20px;
+    display: grid;
+}
+
+.item-link{
+    padding-left: 10px;
+    font-size: 25px;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.edit-button{
+    width: 120px;
+    float: left;
+}
+
+.delete-button{
+    margin-left: 10px;
+}
+
+.default-button{
+    background-color: black;
+}
+
+.labelItem{
+    float: right;
+    margin: 0;
+    height: 100%;
+}

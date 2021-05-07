@@ -1,0 +1,17 @@
+.cardContainer{
+    width: 100%;
+    height: max-content;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px 15%;
+}
+
+.title-container-resume{
+    margin: 20px 0px;
+}
+
+@media (max-width: 600px){
+    .cardContainer{
+        padding: 20px 0 0 0;
+    }
+}

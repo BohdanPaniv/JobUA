@@ -1,17 +1,50 @@
-.title-EP{
+.title-FP{
     margin: 20px;
     height: max-content;
 }
 
-.title-EP a{
+.title-FP a{
     color: black;
 }
 
-.mainTitle-EP{
+.checkBoxGroup-FP{
+    margin-top: 20px;
+}
+
+.checkBoxItem-FP label{
+    margin-left: 5px;
+}
+
+.salartGroup-FP{
+    margin-top: 20px;
+}
+
+.salartGroup-FP input{
+    width: 100px;
+    margin-top: 10px;
+}
+
+.salartGroup-FP label{
+    margin-left: 5px;
+}
+
+.contentGroup-FP select{
+    margin-top: 10px;
+}
+
+.salartGroup-FP p{
+    margin: 0;
+}
+
+.contentContainer-FP h3{
     margin: 20px 0px 0px 0px;
 }
 
-.contentContainer{
+.mainTitle-FP{
+    margin: 20px 0px 0px 0px;
+}
+
+.contentContainer-FP{
     border: 1px solid black;
     height: max-content;
     width: 100%;
@@ -19,16 +52,16 @@
     background-color: #d8e9f0;
 }
 
-.contentGroup{
+.contentGroup-FP{
     margin-top: 20px;
 }
 
-.contentGroup label{
+.contentGroup-FP p{
     width: 100%;
     margin: 0;
 }
 
-.contentGroup input{
+.contentGroup-FP input{
     margin-top: 10px;
     padding: 5px 10px;
     height: 40px;
@@ -36,25 +69,25 @@
 }
 
 @media (max-width: 700px){
-    .mainContainer{
+    .mainContainer-FP{
         margin: 0;
         padding: 0;
     }
 }
 
 @media (min-width: 800px){
-    .mainContainer-EP{
+    .mainContainer-FP{
         width: 730px;
         margin: 0 auto;
         padding: 20px 20px 40px;
     }
 }
 
-.titleEP > a{
+.title-FP > a{
     color: black;
 }
 
-.SubmitButton-EP{
+.SubmitButton-FP{
     color: white;
     width: 100%;
     background-color: black;
@@ -66,12 +99,17 @@
     margin: 0;
 }
 
-.lastGroup{
-    display: flex;
-    margin-top: 10px;
+.lastGroup-FP{
+    margin-top: 20px;
+    height: max-content;
 }
 
-.lastGroup label ,.lastGroup a{
+.lastGroup-FP input{
+    height: 40px;
+    width: max-content;
+}
+
+.lastGroup-FP label ,.lastGroup-FP a{
     margin: 0 0 0 10px;
     align-self: center;
     color: black;

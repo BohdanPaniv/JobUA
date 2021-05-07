@@ -1,9 +1,9 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback} from 'react';
 import './AutentificationPage.css';
 import LogoIcon from "../../Images/logo2.png";
 import EmployerIcon from "../../Images/employer_logo.png";
 import { useHistory } from "react-router-dom";
-import saveUserToLocal from '../../saveUserToLocal/saveUserToLocal';
+import saveObjectToLocal from '../../saveObjectToLocal/saveObjectToLocal';
 
 const useFormField = (initialValue) => {
     const [value, setValue] = React.useState(initialValue);
@@ -23,26 +23,17 @@ const useFormField = (initialValue) => {
 function AutentificationPage(params){
     //const [errorList, setErrorList] = useState({});
 
-    const employerHref = "https://localhost:5001/employer/login/";
-    const employerHref2 = "https://localhost:5001/employer/register/";
-    const [isEmployerPage, setIsEmployerPage] = useState();
-
-    useEffect(() => {
-        setIsEmployerPage(() => {
-            let href = window.location.href.toString();
-            
-            if(href === employerHref || href === employerHref2){
-                return true 
-            }
-
-            return false
-        })
-    },[])
-
     let firstNameField = useFormField("");
     let lastNameField = useFormField("");
+    let email = useFormField("");
     let loginField = useFormField("");
     let passwordField = useFormField("");
+    let passwordField2 = useFormField("");
+    let companyName = useFormField("");
+    let employeeCount = useFormField("");
+    let companyLink = useFormField("");
+    let description = useFormField("");
+    let phone = useFormField("");
     let history = useHistory();
 
     function errorsValidator(line){
@@ -67,48 +58,106 @@ function AutentificationPage(params){
 
         if (Object.keys(err).length === 0){
 
-            let user = ({
-                UserId:"",
-                FirstName: firstNameField.get(),
-                LastName: lastNameField.get(),
-                Login: loginField.get(),
-                Password: passwordField.get()});
+            if(params.isEmployerPage){
+                let employer = ({
+                    EmployerId:"",
+                    FirstName: firstNameField.get(),
+                    LastName: lastNameField.get(),
+                    Email: email.get(),
+                    Login: loginField.get(),   
+                    Password: passwordField.get(),
+                    CompanyName: companyName.get(),
+                    EmployeeCount: employeeCount.get(),
+                    CompanyLink: companyLink.get(),
+                    Description: description.get(),
+                    Phone: phone.get()
+                });
+    
+                switch (line){
+                    case "registration": {
 
-            switch (line){
-                case "registration": {
-                    xhr.open("post","api/users", true);
-                    xhr.setRequestHeader("Content-Type", "application/json");
-
-                    xhr.onload = function () {
-                        if (xhr.status === 200) {
-                            let responsedUser = JSON.parse(xhr.responseText);
-                            saveUserToLocal(responsedUser);
-                            history.push("/");
-                            window.location.reload();
-                        }
-                    };
-
-                    xhr.send(JSON.stringify(user));
-                    break;
+                        console.log("a")
+                        xhr.open("post","api/employers", true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+    
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                let responsedEmployer = JSON.parse(xhr.responseText);
+                                saveObjectToLocal(responsedEmployer, "Employer");
+                                history.push("/employer");
+                                window.location.reload();
+                            }
+                        };
+    
+                        xhr.send(JSON.stringify(employer));
+                        console.log(xhr)
+                        break;
+                    }
+                    case "login": {
+                        xhr.open("get","api/employers/GetEmployerByLoginPassword/"+loginField.get()+","+passwordField.get(), true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+    
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                let responsedEmployer = JSON.parse(xhr.responseText);
+                                saveObjectToLocal(responsedEmployer, "Employer");
+                                history.push("/employer");
+                                window.location.reload();
+                            }
+                        };
+    
+                        xhr.send();
+                        break;
+                    }
+                    default:{
+                        break;
+                    }
                 }
-                case "login": {
-                    xhr.open("get","api/users/GetUserByLoginPassword/"+loginField.get()+","+passwordField.get(), true);
-                    xhr.setRequestHeader("Content-Type", "application/json");
-
-                    xhr.onload = function () {
-                        if (xhr.status === 200) {
-                            let responsedUser = JSON.parse(xhr.responseText);
-                            saveUserToLocal(responsedUser);
-                            history.push("/");
-                            window.location.reload();
-                        }
-                    };
-
-                    xhr.send();
-                    break;
-                }
-                default:{
-                    break;
+            }
+            else{
+                let user = ({
+                    UserId:"",
+                    FirstName: firstNameField.get(),
+                    LastName: lastNameField.get(),
+                    Login: loginField.get(),
+                    Password: passwordField.get()});
+    
+                switch (line){
+                    case "registration": {
+                        xhr.open("post","api/users", true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+    
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                let responsedUser = JSON.parse(xhr.responseText);
+                                saveObjectToLocal(responsedUser,"User");
+                                history.push("/");
+                                window.location.reload();
+                            }
+                        };
+    
+                        xhr.send(JSON.stringify(user));
+                        break;
+                    }
+                    case "login": {
+                        xhr.open("get","api/users/GetUserByLoginPassword/"+loginField.get()+","+passwordField.get(), true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+    
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                let responsedUser = JSON.parse(xhr.responseText);
+                                saveObjectToLocal(responsedUser,"User");
+                                history.push("/");
+                                window.location.reload();
+                            }
+                        };
+    
+                        xhr.send();
+                        break;
+                    }
+                    default:{
+                        break;
+                    }
                 }
             }
         }
@@ -122,7 +171,7 @@ function AutentificationPage(params){
                 params.isRegistration ?
                 (
                     // Employer Registration.
-                    isEmployerPage === true ?(
+                    params.isEmployerPage === true ?(
                         <div className="allContent">
                             <header className="firstLay">
                                 <a href="/employer">
@@ -140,53 +189,61 @@ function AutentificationPage(params){
                                             <h3>Дані для входу</h3>
                                             <div className="form-group">
                                                 <label>Ел. пошта:</label>
-                                                <input type="email"/>
+                                                <input type="email" {...email.bind}/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Логін:</label>
+                                                <input type="text" {...loginField.bind}/>
                                             </div>
                                             <div className="form-group">
                                                 <label>Пароль:</label>
-                                                <input type="password" autoComplete="on"/>
+                                                <input type="password" autoComplete="on" {...passwordField.bind}/>
                                             </div>
                                             <div className="form-group">
                                                 <label>Пароль ще раз:</label>
-                                                <input type="password" autoComplete="on"/>
+                                                <input type="password" autoComplete="on" {...passwordField2.bind}/>
                                             </div>
                                             
                                             <h3 className="title-group">Інформація про компанію</h3>
                                             <div className="form-group">
                                                 <label>Назва компанії:</label>
-                                                <input type="text"/>
+                                                <input type="text" {...companyName.bind}/>
                                             </div>  
                                             <div className="form-group">
                                                 <label>Кількість співробітників у компанії:</label>
-                                                <select>
+                                                <select {...employeeCount.bind}>
                                                     <option value="<10">менше 10</option>
                                                     <option value="10-50">від 10 до 50</option>
                                                     <option value="50-250">від 50 до 250</option>
                                                     <option value="250-1000">від 250 до 1000</option>
-                                                    <option value="<1000">більше 1000</option>
+                                                    <option value="1000>">більше 1000</option>
                                                     <option value="">не вказувати</option>
                                                 </select>
                                             </div> 
                                             <div className="form-group">
                                                 <label>Сайт вашої компанії:</label>
-                                                <input type="text"/>
+                                                <input type="text" {...companyLink.bind}/>
                                             </div>   
                                             <div className="form-group">
                                                 <label>Опис компанії:</label>
-                                                <input type="text"/>
+                                                <input type="text" {...description.bind}/>
                                             </div>
 
                                             <h3 className="title-group">Контактна інформація</h3>
                                             <div className="form-group">
-                                                <label>Ваше ім'я та прізвище:</label>
-                                                <input type="text"/>
-                                            </div>  
+                                                <label>Прізвище:</label>
+                                                <input type="text" {...lastNameField.bind}/>
+                                            </div>
                                             <div className="form-group">
-                                                <label>Ваш телефон:</label>
-                                                <input type="text"/>
+                                                <label>Ім'я:</label>
+                                                <input type="text" {...firstNameField.bind}/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Телефон:</label>
+                                                <input type="text" {...phone.bind}/>
                                             </div>                            
                                             
-                                            <input type="submit" value="Зареєструватись" className="SubmitButton field"/>
+                                            <input type="submit" value="Зареєструватись" className="SubmitButton field" onClick={event => handleSubmit(event,"registration")}/>
                                             <p className="text-center"></p>
                                         </form>
                                     </div>
@@ -224,7 +281,7 @@ function AutentificationPage(params){
                 :
                 (
                     // Employer Login.
-                    isEmployerPage === true ?(
+                    params.isEmployerPage === true ?(
                             <div className="allContent">
                                 <header className="firstLay">
                                     <a href="/employer">

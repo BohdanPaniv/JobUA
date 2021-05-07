@@ -1,7 +1,8 @@
-﻿header{
+﻿.allNavMenu{
   height:max-content;
   width: 100%;
   background-color: #d8e9f0;
+  border-bottom: 1px solid black;
 }
 
 .first-lay{

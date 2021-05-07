@@ -6,7 +6,7 @@ function Home() {
 
     return (
         <>
-            <NavMenu isEmployer={false}/>
+            <NavMenu isEmployerPage={false}/>
             <div className="Home">
                 <p>Home2</p>
                 <button>dsdsds</button>
