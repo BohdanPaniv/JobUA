@@ -25,6 +25,8 @@ namespace JobUA
             services.AddTransient<ResumeService>();
             services.AddTransient<EmployerService>();
             services.AddTransient<UsersResumeService>();
+            services.AddTransient<EmployerVacancyService>();
+            services.AddTransient<VacancyService>();
             services.AddControllersWithViews();
 
             services.AddSpaStaticFiles(configuration =>

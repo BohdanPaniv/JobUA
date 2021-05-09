@@ -3,14 +3,14 @@ import Spinner from 'reactstrap/lib/Spinner';
 import ItemCard from '../ItemCard/ItemCard';
 import './ItemCardList.css';
 
-function ItemCardList({resumeList}){
+function ItemCardList({list}){
 
     return(
-        resumeList ?(
+        list ?(
             <>
             <div className="itemCardList">
                 {
-                    resumeList.map((resume, index) => {
+                    list.map((resume, index) => {
                         return (
                             <ItemCard key={resume.resumeId} resume={resume} index={index}/>
                         )

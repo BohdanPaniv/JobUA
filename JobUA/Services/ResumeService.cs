@@ -55,5 +55,11 @@ namespace JobUA.Services
         {
             await Resumes.DeleteOneAsync(x => x.ResumeId == resumeId);
         }
+
+        public async Task UpdateResume(Resume resume)
+        {
+            var filter = Builders<Resume>.Filter.Eq(x => x.ResumeId, resume.ResumeId);
+            await Resumes.FindOneAndReplaceAsync(filter, resume);
+        }
     }
 }

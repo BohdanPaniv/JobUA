@@ -8,7 +8,8 @@ import MyAccountPage from './components/Pages/MyAccountPage/MyAccountPage';
 import EmployerPage from './components/Pages/EmployerPage/EmployerPage';
 import EditProfile from './components/Pages/EditProfile/EditProfile';
 import FormPage from './components/Pages/FormPage/FormPage';
-import MyResumesPage from './components/Pages/MyResumesPage/MyResumesPage';
+import MyItems from './components/Pages/MyItems/MyItems';
+import VacancyForm from './components/Pages/FormPage/VacancyForm';
 
 export default class App extends Component {
 
@@ -17,11 +18,14 @@ export default class App extends Component {
     return (
       <Router>
         <Switch>
-            <Route exact path="/jobseeker/editResume/" component={() => <FormPage isResumePage={true} isEditPage={true}/>}/>
-            <Route exact path="/jobseeker/ResumePage/:id" component={() => <FormPage isResumePage={true}/>}/>
-            <Route exact path="/jobseeker/myResumes/" component={MyResumesPage}/>
-            <Route exact path="/jobseeker/сreateResume/" component={() => <FormPage isResumePage={true}/>}/>
-            <Route exact path="/employer/сreateVacancy/" component={() => <FormPage isResumePage={false}/>}/>
+            <Route exact path="/jobseeker/myResumes/" component={() => <MyItems isResumePage={true}/>}/>
+            <Route exact path="/employer/myVacancies/" component={() => <MyItems isResumePage={false}/>}/>
+            <Route exact path="/jobseeker/editResume/:id" component={() => <FormPage isEditPage={true}/>}/>
+            <Route exact path="/employer/editVacancy/:id" component={() => <VacancyForm isEditPage={true}/>}/>
+            <Route exact path="/jobseeker/ResumePage/:id" component={() => <FormPage isEditPage={false}/>}/>
+            <Route exact path="/employer/VacancyPage/:id" component={() => <VacancyForm isEditPage={false}/>}/>
+            <Route exact path="/jobseeker/сreateResume/" component={() => <FormPage isEditPage={false}/>}/>
+            <Route exact path="/employer/сreateVacancy/" component={() => <VacancyForm isEditPage={false}/>}/>
             <Route exact path="/employer/editProfile/personal" component={() => <EditProfile isChangePassword={false} isEmployerPage={true}/>}/>
             <Route exact path="/employer/editProfile/password" component={() => <EditProfile isChangePassword={true} isEmployerPage={true}/>}/>
             <Route exact path="/jobseeker/editProfile/personal" component={() => <EditProfile isChangePassword={false} isEmployerPage={false}/>}/>

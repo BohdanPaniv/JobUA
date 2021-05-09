@@ -75,6 +75,10 @@
     }
 }
 
+.multiline{
+    width: 100%;
+}
+
 @media (min-width: 800px){
     .mainContainer-FP{
         width: 730px;

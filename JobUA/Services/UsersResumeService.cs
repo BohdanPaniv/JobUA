@@ -36,5 +36,10 @@ namespace JobUA.Services
 
             return new List<UsersResume>();
         }
+
+        public async Task DeleteUsersResumeById(string resumeId)
+        {
+            await UsersResumes.DeleteOneAsync(x => x.ResumeId == resumeId);
+        }
     }
 }

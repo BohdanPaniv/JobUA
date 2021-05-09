@@ -33,5 +33,12 @@ namespace JobUA.Controllers
 
             return await resumeService.GetResumes(usersResumes);
         }
+
+        [HttpPut("DeleteResumeById/{resumeId}")]
+        public async Task DeleteResumeById(string resumeId)
+        {
+            await resumeService.DeleteResumeById(resumeId);
+            await usersResumeService.DeleteUsersResumeById(resumeId);
+        }
     }
 }

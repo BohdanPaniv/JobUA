@@ -34,7 +34,7 @@ function Profile(props){
                                         Вітаємо, {employer.firstName}!
                                     </h2>
                                     <div className="cardResume">
-                                        <a href="/employer" className="linkToResume">
+                                        <a href="/employer/сreateVacancy/" className="linkToResume">
                                             <ul className="containerResume">
                                                 <li>
                                                     <AiOutlineFileText className="resumeIcon"/>
@@ -56,7 +56,7 @@ function Profile(props){
                                     </div>
                                     <ul className="profileInlineMenu">
                                         <li className="menuComponent">
-                                            <a href="/employer" className="menuLink">
+                                            <a href="/employer/myVacancies" className="menuLink">
                                                 <div className="iconContainer">
                                                     <AiOutlineFileText className="menuIcon"/>
                                                 </div>
