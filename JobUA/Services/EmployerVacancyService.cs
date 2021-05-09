@@ -1,4 +1,5 @@
-﻿using JobUA.Models.EmployerVacancy;
+﻿using JobUA.Models.Employer;
+using JobUA.Models.EmployerVacancy;
 using JobUA.Models.Vacancy;
 using MongoDB.Driver;
 using System;
@@ -40,6 +41,11 @@ namespace JobUA.Services
         public async Task DeleteEmployerVacancyById(string vacancyId)
         {
             await EmployerVacancies.DeleteOneAsync(x => x.VacancyId == vacancyId);
+        }
+
+        public async Task<EmployerVacancy> GetEmployerByVacancyId(string vacancyId)
+        {
+            return await EmployerVacancies.Find(x => x.VacancyId == vacancyId).FirstOrDefaultAsync();
         }
     }
 }

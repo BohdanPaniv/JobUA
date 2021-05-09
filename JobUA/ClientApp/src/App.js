@@ -10,6 +10,7 @@ import EditProfile from './components/Pages/EditProfile/EditProfile';
 import FormPage from './components/Pages/FormPage/FormPage';
 import MyItems from './components/Pages/MyItems/MyItems';
 import VacancyForm from './components/Pages/FormPage/VacancyForm';
+import BusinessPage from './components/Pages/BusinessPage/BusinessPage';
 
 export default class App extends Component {
 
@@ -18,8 +19,10 @@ export default class App extends Component {
     return (
       <Router>
         <Switch>
-            <Route exact path="/jobseeker/myResumes/" component={() => <MyItems isResumePage={true}/>}/>
-            <Route exact path="/employer/myVacancies/" component={() => <MyItems isResumePage={false}/>}/>
+            <Route exact path="/resume/:id" component={() => <BusinessPage isResume={true}/>}/>
+            <Route exact path="/vacancy/:id" component={() => <BusinessPage isResume={false}/>}/>
+            <Route exact path="/jobseeker/myResumes/" component={() => <MyItems isResumePage={true} isMainPage ={false}/>}/>
+            <Route exact path="/employer/myVacancies/" component={() => <MyItems isResumePage={false} isMainPage ={false}/>}/>
             <Route exact path="/jobseeker/editResume/:id" component={() => <FormPage isEditPage={true}/>}/>
             <Route exact path="/employer/editVacancy/:id" component={() => <VacancyForm isEditPage={true}/>}/>
             <Route exact path="/jobseeker/ResumePage/:id" component={() => <FormPage isEditPage={false}/>}/>

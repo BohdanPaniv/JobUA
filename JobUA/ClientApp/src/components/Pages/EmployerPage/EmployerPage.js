@@ -1,17 +1,14 @@
 import React from 'react';
 import NavMenu from '../../PageElements/NavMenu/NavMenu';
 import './EmployerPage.css';
+import MyItems from '../MyItems/MyItems';
 
 function EmployerPage(){
-
-    //console.log(window.location.href)
 
     return(
         <>
             <NavMenu isEmployerPage={true}/>
-            <p>
-                EmployerPage
-            </p>
+            <MyItems isResumePage={false} isMainPage={true}/>
         </>
     )
 }

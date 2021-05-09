@@ -1,8 +1,10 @@
 ﻿using JobUA.Models.Resume;
 using JobUA.Models.UserResume;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace JobUA.Services
@@ -60,6 +62,20 @@ namespace JobUA.Services
         {
             var filter = Builders<Resume>.Filter.Eq(x => x.ResumeId, resume.ResumeId);
             await Resumes.FindOneAndReplaceAsync(filter, resume);
+        }
+
+        public async Task<List<Resume>> GetResumesByTitle(string title)
+        {
+            Regex regex = new Regex(@$"[\s\S]*{title}[\s\S]*", RegexOptions.IgnoreCase);
+            var filter = Builders<Resume>.Filter.Regex(x => x.Post, new BsonRegularExpression(regex));
+            List<Resume> vacancies = await Resumes.Find(filter).ToListAsync();
+            return vacancies;
+        }
+
+        public async Task<List<Resume>> GetResumes()
+        {
+            List<Resume> vacancies = await Resumes.Find(x => true).ToListAsync();
+            return vacancies;
         }
     }
 }

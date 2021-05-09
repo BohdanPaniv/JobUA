@@ -8,25 +8,19 @@ function MyItems(props){
 
     const [user, setUser] = useState();
     const [employer, setEmployer] = useState();
+    const [title, setTitle] = useState("");
 
     const [resumeList, setResumeList] = useState();
     const [vacancyList, setVacancyList] = useState();
 
-    const getResumes = useCallback(() =>{
-        if(user !== undefined){
-            let xhr = new XMLHttpRequest();
-            xhr.open("get","api/usersResume/GetResumesByUserId/" + user.userId, true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    setResumeList(JSON.parse(xhr.responseText))
-                }
-            };
-            xhr.send();
+    useEffect(() => {
+        if(!props.isMainPage){
+            setUser(JSON.parse(JSON.parse(localStorage.getItem("User"))));
+            setEmployer(JSON.parse(JSON.parse(localStorage.getItem("Employer"))));
         }
-    }, [user])
+    },[])
 
-    const getVacancies = useCallback(() =>{
+    useEffect(() =>{
         if(employer !== undefined){
             let xhr = new XMLHttpRequest();
             xhr.open("get","api/employervacancy/GetVacanciesByEmployerId/" + employer.employerId, true);
@@ -38,62 +32,111 @@ function MyItems(props){
             };
             xhr.send();
         }
-    }, [employer])
+    },[employer])
 
     useEffect(() =>{
-        if(!resumeList){
-            getResumes();
+        if(user !== undefined){
+            let xhr = new XMLHttpRequest();
+            xhr.open("get","api/usersResume/GetResumesByUserId/" + user.userId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    setResumeList(JSON.parse(xhr.responseText))
+                }
+            };
+            xhr.send();
         }
-    }, [resumeList, getResumes])
-
-    useEffect(() =>{
-        if(!vacancyList){
-            getVacancies();
-        }
-    }, [vacancyList, getVacancies])
+    },[user])
 
     useEffect(() => {
-        setUser(JSON.parse(JSON.parse(localStorage.getItem("User"))));
-        setEmployer(JSON.parse(JSON.parse(localStorage.getItem("Employer"))));
-    },[])
+        if(props.isResumePage){
+            let xhr = new XMLHttpRequest();
+        
+            if(title !== ""){
+                xhr.open("get","api/vacancy/GetVacanciesByTitle/" + title, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        setVacancyList(JSON.parse(xhr.responseText))
+                    }
+                };
+                xhr.send();
+            }
+            else{
+                xhr.open("get","api/vacancy/GetVacancies/", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        setVacancyList(JSON.parse(xhr.responseText))
+                    }
+                };
+                xhr.send();
+            }
+        }
+        else{
+            let xhr = new XMLHttpRequest();
+        
+            if(title !== ""){
+                xhr.open("get","api/resume/GetResumesByTitle/" + title, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        setResumeList(JSON.parse(xhr.responseText))
+                    }
+                };
+                xhr.send();
+            }
+            else{
+                xhr.open("get","api/resume/GetResumes/", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        setResumeList(JSON.parse(xhr.responseText))
+                    }
+                };
+                xhr.send();
+            }
+        }
+    }, [title])
 
     return(
         <>
             {
-                user !== undefined && employer !== undefined ?(
+                props.isMainPage ?
+                (
                     <>
                         {
                             props.isResumePage ?
                             (
                                 <>
-                                    <NavMenu isEmployerPage={false}/>
                                     <div className="cardContainer">
-                                        <a href="/jobseeker/profile" style={{color:'black'}}>
-                                            <h5>
-                                                Профіль
-                                            </h5>
-                                        </a>
-                                        <h2 className="title-container-resume">
-                                            Мої резюме
-                                        </h2>
-                                        <ItemCardList list={resumeList} /*getResumes={getResumes}*/></ItemCardList>
+                                        <div className="searchTitle">
+                                            <label>
+                                                Пошук за посадою:
+                                            </label>
+                                            <input type="text" onChange={event => setTitle(event.target.value)}/>
+                                        </div>
+                                        <h3>
+                                            Вакансії
+                                        </h3>
+                                        <ItemCardList list={vacancyList} isResumePage={true} isMainPage={true}></ItemCardList>
                                     </div>
                                 </>
                             )
                             :
                             (
                                 <>
-                                    <NavMenu isEmployerPage={true}/>
                                     <div className="cardContainer">
-                                        <a href="/employer/profile" style={{color:'black'}}>
-                                            <h5>
-                                                Профіль
-                                            </h5>
-                                        </a>
-                                        <h2 className="title-container-resume">
-                                            Мої вакансії
-                                        </h2>
-                                        <ItemCardList list={vacancyList} /*getResumes={getResumes}*/></ItemCardList>
+                                        <div className="searchTitle">
+                                            <label>
+                                                Пошук за посадою:
+                                            </label>
+                                            <input type="text" onChange={event => setTitle(event.target.value)}/>
+                                        </div>
+                                        <h3>
+                                            Резюме
+                                        </h3>
+                                        <ItemCardList list={resumeList} isResumePage={false} isMainPage={true}></ItemCardList>
                                     </div>
                                 </>
                             )
@@ -102,7 +145,54 @@ function MyItems(props){
                 )
                 :
                 (
-                    <Spinner/>
+                    <>
+                        {
+                            user !== undefined && employer !== undefined ?(
+                                <>
+                                    {
+                                        props.isResumePage ?
+                                        (
+                                            <>
+                                                <NavMenu isEmployerPage={false}/>
+                                                <div className="cardContainer">
+                                                    <a href="/jobseeker/profile" style={{color:'black'}}>
+                                                        <h5>
+                                                            Профіль
+                                                        </h5>
+                                                    </a>
+                                                    <h2 className="title-container-resume">
+                                                        Мої резюме
+                                                    </h2>
+                                                    <ItemCardList list={resumeList} isResumePage={true} isMainPage={false} /*getResumes={getResumes}*/></ItemCardList>
+                                                </div>
+                                            </>
+                                        )
+                                        :
+                                        (
+                                            <>
+                                                <NavMenu isEmployerPage={true}/>
+                                                <div className="cardContainer">
+                                                    <a href="/employer/profile" style={{color:'black'}}>
+                                                        <h5>
+                                                            Профіль
+                                                        </h5>
+                                                    </a>
+                                                    <h2 className="title-container-resume">
+                                                        Мої вакансії
+                                                    </h2>
+                                                    <ItemCardList list={vacancyList} isResumePage={false} isMainPage={false} /*getResumes={getResumes}*/></ItemCardList>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+                                </>
+                            )
+                            :
+                            (
+                                <Spinner/>
+                            )
+                        }
+                    </>
                 )
             }
         </>

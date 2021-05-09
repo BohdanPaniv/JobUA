@@ -1,20 +1,63 @@
 import React from 'react';
 import Spinner from 'reactstrap/lib/Spinner';
 import ItemCard from '../ItemCard/ItemCard';
+import MainItemCard from '../MainItemCard/MainItemCard';
 import './ItemCardList.css';
 
-function ItemCardList({list}){
+function ItemCardList(props){
 
     return(
-        list ?(
+        props.list ?(
             <>
             <div className="itemCardList">
                 {
-                    list.map((resume, index) => {
-                        return (
-                            <ItemCard key={resume.resumeId} resume={resume} index={index}/>
-                        )
-                    })
+                    props.isMainPage ?
+                    (
+                        <>
+                            {
+                                props.isResumePage ?
+                                (
+                                    props.list.map((vacancy, index) => {
+                                        return (
+                                            <MainItemCard key={vacancy.vacancyId} vacancy={vacancy} index={index}/>
+                                        )
+                                    })
+                                )
+                                :
+                                (
+                                    
+                                    props.list.map((resume, index) => {
+                                        return (
+                                            <MainItemCard key={resume.resumeId} resume={resume} index={index}/>
+                                        )
+                                    })
+                                )
+                            }
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            {
+                                props.isResumePage ?
+                                (
+                                    props.list.map((resume, index) => {
+                                        return (
+                                            <ItemCard key={resume.resumeId} resume={resume} index={index}/>
+                                        )
+                                    })
+                                )
+                                :
+                                (
+                                    props.list.map((vacancy, index) => {
+                                        return (
+                                            <ItemCard key={vacancy.vacancyId} vacancy={vacancy} index={index}/>
+                                        )
+                                    })
+                                )
+                            }
+                        </>
+                    )
                 }
             </div>
         </>

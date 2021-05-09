@@ -1,6 +1,7 @@
 ﻿using JobUA.Models.Resume;
 using JobUA.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace JobUA.Controllers
@@ -31,6 +32,18 @@ namespace JobUA.Controllers
         public async Task UpdateResume(Resume resume)
         {
             await resumeService.UpdateResume(resume);
+        }
+
+        [HttpGet("GetResumesByTitle/{title}")]
+        public async Task<List<Resume>> GetResumesByTitle(string title)
+        {
+            return await resumeService.GetResumesByTitle(title);
+        }
+
+        [HttpGet("GetResumes/")]
+        public async Task<List<Resume>> GetResumes()
+        {
+            return await resumeService.GetResumes();
         }
     }
 }

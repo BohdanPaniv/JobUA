@@ -1,4 +1,5 @@
 ﻿using JobUA.Models.Resume;
+using JobUA.Models.User;
 using JobUA.Models.UserResume;
 using JobUA.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace JobUA.Controllers
     {
         private readonly UsersResumeService usersResumeService;
         private readonly ResumeService resumeService;
-        public UsersResumeController(UsersResumeService usersResumeService, ResumeService resumeService)
+        private readonly UserService userService;
+        public UsersResumeController(UsersResumeService usersResumeService, ResumeService resumeService, UserService userService)
         {
             this.usersResumeService = usersResumeService;
             this.resumeService = resumeService;
+            this.userService = userService;
         }
 
         [HttpPost("CreateUsersResume/{userId}")]
@@ -39,6 +42,13 @@ namespace JobUA.Controllers
         {
             await resumeService.DeleteResumeById(resumeId);
             await usersResumeService.DeleteUsersResumeById(resumeId);
+        }
+
+        [HttpGet("GetUserByResumeId/{resumeId}")]
+        public async Task<User> GetUserByResumeId(string resumeId)
+        {
+            UsersResume usersResume = await usersResumeService.GetUserByResumeId(resumeId);
+            return await userService.GetUserById(usersResume.UserId);
         }
     }
 }

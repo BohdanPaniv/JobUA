@@ -1,8 +1,10 @@
 ﻿using JobUA.Models.EmployerVacancy;
 using JobUA.Models.Vacancy;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace JobUA.Services
@@ -49,6 +51,20 @@ namespace JobUA.Services
         public async Task<Vacancy> GetVacancyById(string resumeId)
         {
             return await Vacancies.Find(x => x.VacancyId == resumeId).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Vacancy>> GetVacanciesByTitle(string title)
+        {
+            Regex regex = new Regex(@$"[\s\S]*{title}[\s\S]*", RegexOptions.IgnoreCase);
+            var filter = Builders<Vacancy>.Filter.Regex(x => x.Post, new BsonRegularExpression(regex));
+            List<Vacancy> vacancies = await Vacancies.Find(filter).ToListAsync();
+            return vacancies;
+        }
+
+        public async Task<List<Vacancy>> GetVacancies()
+        {
+            List<Vacancy> vacancies = await Vacancies.Find(x => true).ToListAsync();
+            return vacancies;
         }
 
         public async Task DeleteVacancyById(string vacancyId)

@@ -41,5 +41,10 @@ namespace JobUA.Services
         {
             await UsersResumes.DeleteOneAsync(x => x.ResumeId == resumeId);
         }
+
+        public async Task<UsersResume> GetUserByResumeId(string resumeId)
+        {
+            return await UsersResumes.Find(x => x.ResumeId == resumeId).FirstOrDefaultAsync();
+        }
     }
 }

@@ -46,5 +46,10 @@ namespace JobUA.Services
             var filter = Builders<Employer>.Filter.Eq(x => x.EmployerId, user.EmployerId);
             return await Employers.FindOneAndReplaceAsync(filter, user);
         }
+
+        public async Task<Employer> GetEmployerById(string employerId)
+        {
+            return await Employers.Find(x => x.EmployerId == employerId).FirstOrDefaultAsync();
+        }
     }
 }

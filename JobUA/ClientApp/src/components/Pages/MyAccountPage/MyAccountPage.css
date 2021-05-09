@@ -40,7 +40,7 @@
 
 .ul-horizontal li{
     float: left;
-    width: max-content;
+    /* width: max-content; */
     min-width: 50%;
     height: max-content;
     min-height: 24px;

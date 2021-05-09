@@ -105,9 +105,9 @@ function NavMenu(props) {
                 <ul className="second-list">
                   <li className="NavMenuList">
                     <a href="/vacansions" className="link1">
-                      <h4 className="firstTitle">
+                      {/* <h4 className="firstTitle">
                         Знайти вакансії
-                      </h4>
+                      </h4> */}
                     </a>
                   </li>
                   <li className="NavMenuList">

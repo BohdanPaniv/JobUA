@@ -1,0 +1,36 @@
+.main-item-card{
+    background-color: #d8e9f0;
+    border: 1px solid black;
+    padding: 20px;
+    position: relative;
+    height: max-content;
+    margin-bottom: 20px;
+    display: grid;
+}
+
+.main-item-link{
+    /* padding-left: 10px; */
+    font-size: 25px;
+    color: black;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.main-edit-button{
+    width: 120px;
+    float: left;
+}
+
+.main-delete-button{
+    margin-left: 10px;
+}
+
+.main-default-button{
+    background-color: black;
+}
+
+.main-labelItem{
+    float: right;
+    margin: 0;
+    height: 100%;
+}

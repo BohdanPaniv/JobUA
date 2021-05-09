@@ -1,4 +1,5 @@
-﻿using JobUA.Models.EmployerVacancy;
+﻿using JobUA.Models.Employer;
+using JobUA.Models.EmployerVacancy;
 using JobUA.Models.Vacancy;
 using JobUA.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ namespace JobUA.Controllers
     public class EmployerVacancyController
     {
         private readonly EmployerVacancyService employerVacancyService;
+        private readonly EmployerService employerService;
         private readonly VacancyService vacancyService;
-        public EmployerVacancyController(EmployerVacancyService employerVacancyService, VacancyService vacancyService)
+        public EmployerVacancyController(EmployerVacancyService employerVacancyService, VacancyService vacancyService, EmployerService employerService)
         {
             this.employerVacancyService = employerVacancyService;
             this.vacancyService = vacancyService;
+            this.employerService = employerService;
         }
 
         [HttpPost("CreateEmployerVacancy/{employerId}")]
@@ -38,6 +41,13 @@ namespace JobUA.Controllers
         {
             await vacancyService.DeleteVacancyById(vacancyId);
             await employerVacancyService.DeleteEmployerVacancyById(vacancyId);
+        }
+
+        [HttpGet("GetEmployerByVacancyId/{vacancyId}")]
+        public async Task<Employer> GetEmployerByVacancyId(string vacancyId)
+        {
+            EmployerVacancy employerVacancy = await employerVacancyService.GetEmployerByVacancyId(vacancyId);
+            return await employerService.GetEmployerById(employerVacancy.EmployerId);
         }
     }
 }
