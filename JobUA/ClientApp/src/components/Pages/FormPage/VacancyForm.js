@@ -97,7 +97,6 @@ function VacancyForm(props){
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         history.push("/employer/myVacancies");
-                        window.location.reload();
                     }
                 };
         
@@ -113,7 +112,6 @@ function VacancyForm(props){
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         history.push("/employer/myVacancies/");
-                        window.location.reload();
                     }
                 };
         
@@ -124,13 +122,6 @@ function VacancyForm(props){
                 break;
         }
     }
-
-    console.log(vacancy)
-    console.log(checkBox1)
-    console.log(checkBox2)
-    console.log(checkBox3)
-    console.log(checkBox4)
-    console.log(checkBox5)
 
     return (
         <>

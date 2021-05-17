@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Button from 'reactstrap/lib/Button';
 import './MainItemCard.css';
 import Spinner from 'reactstrap/lib/Spinner';
-import { useHistory } from "react-router-dom";
 
 function MainItemCard(props){
     const [user, setUser] = useState();
@@ -38,25 +36,7 @@ function MainItemCard(props){
             };
             xhr.send();
         }
-    },[])
-
-    // useEffect(() => {
-    //     console.log(resume)
-    //     // let xhr = new XMLHttpRequest();
-    //     // xhr.open("get","api/resume/GetResumeById/" + pageId, true);
-    //     // xhr.setRequestHeader("Content-Type", "application/json");
-    //     // xhr.onload = function () {
-    //     //     if (xhr.status === 200) {
-    //     //         const tempResume = JSON.parse(xhr.responseText);
-    //     //         setCheckBox1(tempResume.typeOfEmployment.includes("повна зайнятість"));
-    //     //         setCheckBox2(tempResume.typeOfEmployment.includes("неповна зайнятість"));
-    //     //         setCheckBox3(tempResume.typeOfEmployment.includes("дистанційна робота"));
-    //     //         setCheckBox(tempResume.isWorkExperience);
-    //     //         setResume(tempResume);
-    //     //     }
-    //     // };
-    //     // xhr.send();
-    // },[resume])
+    },[resume, vacancy])
 
     return(
         <>

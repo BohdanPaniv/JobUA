@@ -31,7 +31,7 @@ namespace JobUA.Services
 
         public async Task<Employer> GetEmployerByLoginPassword(string login, string password)
         {
-            Employer findEmployer = await Employers.Find(x => x.Login == login && x.Password == password).FirstAsync();
+            Employer findEmployer = await Employers.Find(x => x.Login == login && x.Password == password).FirstOrDefaultAsync();
 
             if(findEmployer != null)
             {

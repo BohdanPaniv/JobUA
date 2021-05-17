@@ -8,8 +8,6 @@ const ImageUpload = ({setImage,setIsChanged}) => {
     let reader = new FileReader();
     let file = e.target.files[0];
 
-    //console.log(reader.result);
-
     reader.onloadend = () => {
         setImage(reader.result);
         setIsChanged(true)

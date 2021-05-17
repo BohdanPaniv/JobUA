@@ -21,43 +21,110 @@ const useFormField = (initialValue) => {
 };
 
 function AutentificationPage(params){
-    //const [errorList, setErrorList] = useState({});
+
+    let history = useHistory();
 
     let firstNameField = useFormField("");
     let lastNameField = useFormField("");
     let email = useFormField("");
     let loginField = useFormField("");
     let passwordField = useFormField("");
-    let passwordField2 = useFormField("");
     let companyName = useFormField("");
     let employeeCount = useFormField("");
     let companyLink = useFormField("");
     let description = useFormField("");
     let phone = useFormField("");
-    let history = useHistory();
 
-    function errorsValidator(line){
-        let errors = {};
+    function errorsValidator(error){
+        let login = document.getElementById("login");
+        login.innerText = null;
+        let password = document.getElementById("password");
+        password.innerText = null;
 
-        if (!loginField.get().trim()) errors["Login"] = true;
-        if (!passwordField.get().trim()) errors["Password"] = true;
-
-        if (line === "new"){
-            if (!firstNameField.get().trim()) errors["FirstName"] = true;
-            if (!lastNameField.get().trim()) errors["LastName"] = true;
+        if (!loginField.get().trim()){
+            login.innerText = "Заповніть поле 'Логін'";
+            error++;
+        } 
+        if (!passwordField.get().trim()){
+            password.innerText = "Заповніть поле 'Пароль'";
+            error++;
         }
 
-        return errors;
+        if(params.isRegistration){
+            let firstNameElement = document.getElementById("firstNameElement");
+            firstNameElement.innerText = null;
+            let lastNameElement = document.getElementById("lastNameElement");
+            lastNameElement.innerText = null;
+
+            if(params.isEmployerPage === true){
+                let emailElement = document.getElementById("emailElement");
+                emailElement.innerText = null;
+                let companyNameElement = document.getElementById("companyNameElement");
+                companyNameElement.innerText = null;
+                let employeeCountElement = document.getElementById("employeeCountElement");
+                employeeCountElement.innerText = null;
+                let companyLinkElement = document.getElementById("companyLinkElement");
+                companyLinkElement.innerText = null;
+                let descriptionElement = document.getElementById("descriptionElement");
+                descriptionElement.innerText = null;
+                let phoneElement = document.getElementById("phoneElement");
+                phoneElement.innerText = null;
+
+                if (!email.get().trim()){
+                    emailElement.innerText = "Заповніть поле 'Пошта'";
+                    error++;
+                } 
+
+                if (!companyName.get().trim()){
+                    companyNameElement.innerText = "Заповніть поле 'Імя компанії'";
+                    error++;
+                }
+                
+                if (!employeeCount.get().trim()){
+                    employeeCountElement.innerText = "Заповніть поле 'Кількість співробітників'";
+                    error++;
+                } 
+
+                if (!companyLink.get().trim()){
+                    companyLinkElement.innerText = "Заповніть поле 'Посилання'";
+                    error++;
+                }
+
+                if (!description.get().trim()){
+                    descriptionElement.innerText = "Заповніть поле 'Опис'";
+                    error++;
+                } 
+                
+                if (!phone.get().trim()){
+                    phoneElement.innerText = "Заповніть поле 'Телефон'";
+                    error++;
+                }
+            }
+
+            if (!firstNameField.get().trim()){
+                firstNameElement.innerText = "Заповніть поле 'Ім'я'";
+                error++;
+            } 
+
+            if (!lastNameField.get().trim()){
+                lastNameElement.innerText = "Заповніть поле 'Прізвище'";
+                error++;
+            }
+        }
+
+        return error;
     }
+
 
     function handleSubmit(event, line){
         let xhr = new XMLHttpRequest();
-        let err = errorsValidator(line);
+        let error = 0;
+        error = errorsValidator(error);
 
-        //setErrorList(err);
+        console.log(error)
 
-        if (Object.keys(err).length === 0){
-
+        if (error === 0){
+            
             if(params.isEmployerPage){
                 let employer = ({
                     EmployerId:"",
@@ -76,7 +143,6 @@ function AutentificationPage(params){
                 switch (line){
                     case "registration": {
 
-                        console.log("a")
                         xhr.open("post","api/employers", true);
                         xhr.setRequestHeader("Content-Type", "application/json");
     
@@ -85,7 +151,6 @@ function AutentificationPage(params){
                                 let responsedEmployer = JSON.parse(xhr.responseText);
                                 saveObjectToLocal(responsedEmployer, "Employer");
                                 history.push("/employer");
-                                window.location.reload();
                             }
                         };
     
@@ -100,9 +165,16 @@ function AutentificationPage(params){
                         xhr.onload = function () {
                             if (xhr.status === 200) {
                                 let responsedEmployer = JSON.parse(xhr.responseText);
-                                saveObjectToLocal(responsedEmployer, "Employer");
-                                history.push("/employer");
-                                window.location.reload();
+                                console.log(responsedEmployer)
+                                if(!responsedEmployer.employerId){
+                                    let login = document.getElementById("login");
+                                    login.innerText = "Логін або пароль не правильний!";
+                                }
+                                else{
+                                    console.log(1)
+                                    saveObjectToLocal(responsedEmployer,"Employer");
+                                    history.push("/employer");
+                                }
                             }
                         };
     
@@ -132,7 +204,6 @@ function AutentificationPage(params){
                                 let responsedUser = JSON.parse(xhr.responseText);
                                 saveObjectToLocal(responsedUser,"User");
                                 history.push("/");
-                                window.location.reload();
                             }
                         };
     
@@ -146,9 +217,17 @@ function AutentificationPage(params){
                         xhr.onload = function () {
                             if (xhr.status === 200) {
                                 let responsedUser = JSON.parse(xhr.responseText);
-                                saveObjectToLocal(responsedUser,"User");
-                                history.push("/");
-                                window.location.reload();
+                                console.log(responsedUser)
+
+                                if(!responsedUser.userId){
+                                    console.log(1);
+                                    let login = document.getElementById("login");
+                                    login.innerText = "Логін або пароль не правильний!";
+                                }
+                                else{
+                                    saveObjectToLocal(responsedUser,"User");
+                                    history.push("/");
+                                }
                             }
                         };
     
@@ -190,24 +269,24 @@ function AutentificationPage(params){
                                             <div className="form-group">
                                                 <label>Ел. пошта:</label>
                                                 <input type="email" {...email.bind}/>
+                                                <label id="emailElement"></label>
                                             </div>
                                             <div className="form-group">
                                                 <label>Логін:</label>
                                                 <input type="text" {...loginField.bind}/>
+                                                <label id="login"></label>
                                             </div>
                                             <div className="form-group">
                                                 <label>Пароль:</label>
                                                 <input type="password" autoComplete="on" {...passwordField.bind}/>
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Пароль ще раз:</label>
-                                                <input type="password" autoComplete="on" {...passwordField2.bind}/>
+                                                <label id="password"></label>
                                             </div>
                                             
                                             <h3 className="title-group">Інформація про компанію</h3>
                                             <div className="form-group">
                                                 <label>Назва компанії:</label>
                                                 <input type="text" {...companyName.bind}/>
+                                                <label id="companyNameElement"></label>
                                             </div>  
                                             <div className="form-group">
                                                 <label>Кількість співробітників у компанії:</label>
@@ -219,32 +298,39 @@ function AutentificationPage(params){
                                                     <option value="1000>">більше 1000</option>
                                                     <option value="">не вказувати</option>
                                                 </select>
-                                            </div> 
+                                                <label id="employeeCountElement"></label>
+                                            </div>
                                             <div className="form-group">
                                                 <label>Сайт вашої компанії:</label>
                                                 <input type="text" {...companyLink.bind}/>
-                                            </div>   
+                                                <label id="companyLinkElement"></label>
+                                            </div>
                                             <div className="form-group">
                                                 <label>Опис компанії:</label>
                                                 <input type="text" {...description.bind}/>
+                                                <label id="descriptionElement"></label>
                                             </div>
-
                                             <h3 className="title-group">Контактна інформація</h3>
                                             <div className="form-group">
                                                 <label>Прізвище:</label>
                                                 <input type="text" {...lastNameField.bind}/>
+                                                <label id="lastNameElement"></label>
                                             </div>
                                             <div className="form-group">
                                                 <label>Ім'я:</label>
                                                 <input type="text" {...firstNameField.bind}/>
+                                                <label id="firstNameElement"></label>
                                             </div>
                                             <div className="form-group">
                                                 <label>Телефон:</label>
                                                 <input type="text" {...phone.bind}/>
+                                                <label id="phoneElement"></label>
                                             </div>                            
                                             
                                             <input type="submit" value="Зареєструватись" className="SubmitButton field" onClick={event => handleSubmit(event,"registration")}/>
-                                            <p className="text-center"></p>
+                                            <p className="text-center">
+                                                <a className="registrationLink" href="/employer">Головна сторінка</a>
+                                            </p>
                                         </form>
                                     </div>
                                 </div>
@@ -264,14 +350,18 @@ function AutentificationPage(params){
                                 <h2 className="titleLogin">Реєстрація</h2>
                                 <div className="card-container">
                                     <div className="login-card">
-                                        <form>
-                                            <input className="field" type="text" placeholder="Прізвище" {...lastNameField.bind}/>
-                                            <input className="field" type="text" placeholder="Ім'я" {...firstNameField.bind}/>
-                                            <input className="field" type="text" placeholder="Логін" {...loginField.bind}/>
-                                            <input className="field" type="password" autoComplete="on" placeholder="Пароль" {...passwordField.bind}/>
-                                            <input type="submit" value="Зареєструватись" className="SubmitButton field" onClick={event => handleSubmit(event,"registration")}/>
-                                            <p className="text-center"></p>
-                                        </form>
+                                        <input className="field" type="text" placeholder="Прізвище" {...lastNameField.bind}/>
+                                        <label id="lastNameElement"></label>
+                                        <input className="field" type="text" placeholder="Ім'я" {...firstNameField.bind}/>
+                                        <label id="firstNameElement"></label>
+                                        <input className="field" type="text" placeholder="Логін" {...loginField.bind}/>
+                                        <label id="login"></label>
+                                        <input className="field" type="password" autoComplete="on" placeholder="Пароль" {...passwordField.bind}/>
+                                        <label id="password"></label>
+                                        <input type="submit" value="Зареєструватись" className="SubmitButton field" onClick={event => handleSubmit(event,"registration")}/>
+                                        <p className="text-center">
+                                            <a className="registrationLink" href="/">Головна сторінка</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -292,11 +382,13 @@ function AutentificationPage(params){
                                     <h2 className="titleLogin">Вхід</h2>
                                     <div className="card-container">
                                         <div className="login-card">
-                                            <form>
+                                            {/* <form> */}
                                                 <input className="field" type="text" placeholder="Логін" {...loginField.bind}/>
+                                                <label id="login"></label>
                                                 <input className="field" type="password" autoComplete="on" placeholder="Пароль" {...passwordField.bind}/>
+                                                <label id="password"></label>
                                                 <input className="SubmitButton field" type="submit" value="Увійти" onClick={event => handleSubmit(event,"login")}/>
-                                            </form>
+                                            {/* </form> */}
                                             <p className="text-center">
                                                 <span className="text-ask">Ще не з нами?</span>
                                                 <a className="registrationLink" href="/employer/register/">Зареєструватись</a>
@@ -319,11 +411,13 @@ function AutentificationPage(params){
                                 <h2 className="titleLogin">Вхід</h2>
                                 <div className="card-container">
                                     <div className="login-card">
-                                        <form>
+                                        {/* <form> */}
                                             <input className="field" type="text" placeholder="Логін" {...loginField.bind}/>
+                                            <label id="login"></label>
                                             <input className="field" type="password" autoComplete="on" placeholder="Пароль" {...passwordField.bind}/>
+                                            <label id="password"></label>
                                             <input className="SubmitButton field" type="submit" value="Увійти" onClick={event => handleSubmit(event,"login")}/>
-                                        </form>
+                                        {/* </form> */}
                                         <p className="text-center">
                                             <span className="text-ask">Ще не з нами?</span>
                                             <a className="registrationLink" href="/jobseeker/register/">Зареєструватись</a>

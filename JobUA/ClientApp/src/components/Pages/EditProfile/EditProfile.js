@@ -22,8 +22,8 @@ function EditProfile(props){
     const [companyLink, setCompanyLink] = useState();
     const [description, setDescription] = useState();
 
-    const [password1, setPassword1] = useState();
-    const [password2, setPassword2] = useState();  
+    const [password1, setPassword1] = useState("");
+    const [password2, setPassword2] = useState("");  
     let history = useHistory();
 
     useEffect(() => {
@@ -31,66 +31,96 @@ function EditProfile(props){
         setEmployer(JSON.parse(JSON.parse(localStorage.getItem("Employer"))))
     },[])
 
+    function errorsValidator(error){
+        if(props.isChangePassword){
+            let password1Element = document.getElementById("password1");
+            password1Element.innerText = null;
+            let password2Element = document.getElementById("password2");
+            password2Element.innerText = null;
+
+            if (!password1){
+                password1Element.innerText = "Заповніть поле 'Пароль1'";
+                error++;
+            }
+            if (!password2){
+                password2Element.innerText = "Заповніть поле 'Пароль2'";
+                error++;
+            }
+
+            if(error === 0){
+                if(password1 !== password2){
+                    password1Element.innerText = "Поля не співпадають!";
+                    error++;
+                }
+            }
+        }
+
+        return error;
+    }
+
     async function UpdateUser(){
         let xhr = new XMLHttpRequest();
 
-        if(props.isEmployerPage){
-            if(props.isChangePassword){
-                if(password1 !== undefined) employer.password = password1;
+        let error = 0;
+        error = errorsValidator(error);
+
+        console.log(error);
+
+        if(error === 0){
+            if(props.isEmployerPage){
+                if(props.isChangePassword){
+                    if(password1 !== undefined) employer.password = password1;
+                }
+                else{
+                    if(firstName !== undefined) employer.firstName = firstName;
+                    if(lastName !== undefined) employer.lastName = lastName;
+                    if(email !== undefined) employer.email = email;
+                    if(phone !== undefined) employer.phone = phone;
+                    if(companyName !== undefined) employer.companyName = companyName;
+                    if(employeeCount !== undefined) employer.employeeCount = employeeCount;
+                    if(companyLink !== undefined) employer.companyLink = companyLink;
+                    if(description !== undefined) employer.description = description;
+                }
+    
+                xhr.open("put","api/employers/UpdateEmployer/", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+    
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        saveObjectToLocal(employer, "Employer");
+                        history.push("/employer/myAccount");
+                    }
+                };
+    
+                xhr.send(JSON.stringify(employer))
             }
             else{
-                if(firstName !== undefined) employer.firstName = firstName;
-                if(lastName !== undefined) employer.lastName = lastName;
-                if(email !== undefined) employer.email = email;
-                if(phone !== undefined) employer.phone = phone;
-                if(companyName !== undefined) employer.companyName = companyName;
-                if(employeeCount !== undefined) employer.employeeCount = employeeCount;
-                if(companyLink !== undefined) employer.companyLink = companyLink;
-                if(description !== undefined) employer.description = description;
-            }
-
-            xhr.open("put","api/employers/UpdateEmployer/", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    saveObjectToLocal(employer, "Employer");
-                    history.push("/employer/myAccount");
-                    window.location.reload();
+                if(props.isChangePassword){
+                    if(password1 !== undefined) user.password = password1;
                 }
-            };
-
-            xhr.send(JSON.stringify(employer))
-        }
-        else{
-            if(props.isChangePassword){
-                if(password1 !== undefined) user.password = password1;
-            }
-            else{
-                if(firstName !== undefined) user.firstName = firstName;
-                if(lastName !== undefined) user.lastName = lastName;
-                if(byFather !== undefined) user.byFather = byFather;
-                if(email !== undefined) user.email = email;
-                if(city !== undefined) user.city = city;
-                if(phone !== undefined) user.phone = phone;
-                if(birthday !== undefined) user.birthday = birthday;
-            }
-            
-            xhr.open("put","api/users/UpdateUser/", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    saveObjectToLocal(user, "User");
-                    history.push("/jobseeker/myAccount");
-                    window.location.reload();
+                else{
+                    if(firstName !== undefined) user.firstName = firstName;
+                    if(lastName !== undefined) user.lastName = lastName;
+                    if(byFather !== undefined) user.byFather = byFather;
+                    if(email !== undefined) user.email = email;
+                    if(city !== undefined) user.city = city;
+                    if(phone !== undefined) user.phone = phone;
+                    if(birthday !== undefined) user.birthday = birthday;
                 }
-            };
-
-            xhr.send(JSON.stringify(user))
+                
+                xhr.open("put","api/users/UpdateUser/", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+    
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        saveObjectToLocal(user, "User");
+                        history.push("/jobseeker/myAccount");
+                    }
+                };
+    
+                xhr.send(JSON.stringify(user))
+            }
         }
-
-        console.log(xhr)
     }
 
     return(
@@ -118,10 +148,12 @@ function EditProfile(props){
                                                 <div className="contentGroup">
                                                     <label>Новий пароль:</label>
                                                     <input type="password" onChange={event => setPassword1(event.target.value)}/>
+                                                    <label id="password1"></label>
                                                 </div>
                                                 <div className="contentGroup">
                                                     <label>Новий пароль ще раз:</label>
                                                     <input type="password" onChange={event => setPassword2(event.target.value)}/>
+                                                    <label id="password2"></label>
                                                 </div>
                                                 <div className="lastGroup">
                                                     <input type="submit" value="Зберегти" className="SubmitButton-EP" onClick={UpdateUser} name="Зберегти"/>
@@ -220,10 +252,12 @@ function EditProfile(props){
                                                 <div className="contentGroup">
                                                     <label>Новий пароль:</label>
                                                     <input type="password" onChange={event => setPassword1(event.target.value)}/>
+                                                    <label id="password1"></label>
                                                 </div>
                                                 <div className="contentGroup">
                                                     <label>Новий пароль ще раз:</label>
                                                     <input type="password" onChange={event => setPassword2(event.target.value)}/>
+                                                    <label id="password2"></label>
                                                 </div>
                                                 <div className="lastGroup">
                                                     <input type="submit" value="Зберегти" className="SubmitButton-EP" onClick={UpdateUser} name="Зберегти"/>

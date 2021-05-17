@@ -68,7 +68,6 @@ function MyAccountPage(props){
         xhr.onload = function () {
             if (xhr.status === 200) {
                 saveObjectToLocal(user,"User");
-                window.location.reload();
             }
         };
         

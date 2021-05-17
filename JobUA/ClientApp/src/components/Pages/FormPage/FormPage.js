@@ -95,7 +95,6 @@ function FormPage(props) {
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         history.push("/jobseeker/myResumes/");
-                        window.location.reload();
                     }
                 };
         
@@ -110,7 +109,6 @@ function FormPage(props) {
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         history.push("/jobseeker/myResumes/");
-                        window.location.reload();
                     }
                 };
         

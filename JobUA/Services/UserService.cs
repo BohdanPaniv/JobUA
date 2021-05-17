@@ -36,7 +36,14 @@ namespace JobUA.Services
 
         public async Task<User> GetUserByLoginPassword(string login, string password)
         {
-            return await Users.Find(x => x.Login == login && x.Password == password).FirstAsync();
+            User findUser = await Users.Find(x => x.Login == login && x.Password == password).FirstOrDefaultAsync();
+            
+            if(findUser != null)
+            {
+                return findUser;
+            }
+
+            return new User();
         }
 
         public async Task<User> UpdateUser(User user)

@@ -1,3 +1,13 @@
-/* .multiline :hover{
-    display: none;
-} */
+.image-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 280px;
+    width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.resume-image{
+    height: 100%;
+    width: 100%;
+}

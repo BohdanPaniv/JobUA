@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Spinner from 'reactstrap/lib/Spinner';
 import NavMenu from '../../PageElements/NavMenu/NavMenu';
 import ItemCardList from '../../PageElements/ItemCardList/ItemCardList';
@@ -18,10 +18,10 @@ function MyItems(props){
             setUser(JSON.parse(JSON.parse(localStorage.getItem("User"))));
             setEmployer(JSON.parse(JSON.parse(localStorage.getItem("Employer"))));
         }
-    },[])
+    },[props.isMainPage])
 
     useEffect(() =>{
-        if(employer !== undefined){
+        if(employer !== undefined && employer !== null){
             let xhr = new XMLHttpRequest();
             xhr.open("get","api/employervacancy/GetVacanciesByEmployerId/" + employer.employerId, true);
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -35,7 +35,7 @@ function MyItems(props){
     },[employer])
 
     useEffect(() =>{
-        if(user !== undefined){
+        if(user !== undefined && user !== null){
             let xhr = new XMLHttpRequest();
             xhr.open("get","api/usersResume/GetResumesByUserId/" + user.userId, true);
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -97,7 +97,7 @@ function MyItems(props){
                 xhr.send();
             }
         }
-    }, [title])
+    }, [title, props.isResumePage])
 
     return(
         <>
