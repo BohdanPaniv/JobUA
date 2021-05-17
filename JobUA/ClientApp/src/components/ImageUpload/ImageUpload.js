@@ -20,7 +20,7 @@ const ImageUpload = ({setImage,setIsChanged}) => {
   
   return (
     <>
-      <input type="file" className="showDialogButton" onChange={event => {imageSelect(event)}}/>
+      <input type="file" accept="image/png, image/gif, image/jpeg" className="showDialogButton" onChange={event => {imageSelect(event)}}/>
     </>
   );
 };

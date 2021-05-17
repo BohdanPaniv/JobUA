@@ -20,34 +20,6 @@ function MyAccountPage(props){
         setEmployer(JSON.parse(JSON.parse(localStorage.getItem("Employer"))))
     },[])
 
-    // async function GetUser(){
-    //     return new Promise(function (resolve, reject) {
-    //         let xhr = new XMLHttpRequest();
-    //         let id = JSON.parse(JSON.parse(localStorage.getItem("User"))).userId;
-
-    //         console.log(id);
-    //         xhr.open("get","api/users/GetUserById/" + id, true);
-    //         xhr.setRequestHeader("Content-Type", "application/json");
-    //         xhr.onload = function () {
-    //             if (this.status >= 200 && this.status < 300) {
-    //                 resolve(JSON.parse(xhr.responseText));
-    //             } else {
-    //                 reject({
-    //                     status: this.status,
-    //                     statusText: xhr.statusText
-    //                 });
-    //             }
-    //         };
-    //         xhr.onerror = function () {
-    //             reject({
-    //                 status: this.status,
-    //                 statusText: xhr.statusText
-    //             });
-    //         };
-    //         xhr.send();
-    //     });
-    // }
-
     async function UpdateUser(type){
         let xhr = new XMLHttpRequest();
 
@@ -72,6 +44,7 @@ function MyAccountPage(props){
         };
         
         xhr.send(JSON.stringify(user));
+        setTimeout(() => {  window.location.reload(); }, 1000);
     }
 
     function GetPasswordView(type){
