@@ -90,7 +90,7 @@ function BusinessPage(props){
                                                 {formData.post}
                                             </h3>
                                             <div className="image-container">
-                                                <img src={person.image} alt="Error" className="resume-image"/>
+                                                <img src={person?.image} alt="Error" className="resume-image"/>
                                             </div>
                                             <div className="contentGroup-FP">
                                                 <p>
